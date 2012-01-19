@@ -107,5 +107,5 @@ def printStatistics(champions)
   Nil.printTable(table)
 end
 
-champions = loadChampionData('input/data')
+champions = loadChampionData('../input/data')
 printStatistics(champions)
