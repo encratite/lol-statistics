@@ -2,7 +2,7 @@ require 'nil/file'
 require 'nil/console'
 
 class ChampionStats
-  attr_reader :name, :games, :victories
+  attr_reader :name, :games, :victories, :defeats
 
   def initialize(name)
     @name = name
@@ -10,6 +10,7 @@ class ChampionStats
     @deaths = 0
     @assists = 0
     @victories = 0
+    @defeats = 0
     @games = 0
   end
 
@@ -19,6 +20,8 @@ class ChampionStats
     @assists += assists
     if victorious
       @victories += 1
+    else
+      @defeats += 1
     end
     @games += 1
   end
@@ -86,17 +89,24 @@ def printStatistics(champions)
   table = [
     [
       'Champion',
-      'Wins/losses',
-      'Win ratio',
+      'W/L',
+      'WLD',
+      'WR',
       'K/D/A',
       'K/D',
       'K+A/D',
     ]
   ]
   champions.each do |champion|
+    gain = champion.victories - champion.defeats
+    wld = gain.to_s
+    if gain > 0
+      wld = "+#{wld}"
+    end
     row = [
       champion.name,
-      "#{champion.victories} - #{champion.games - champion.victories}",
+      "#{champion.victories} - #{champion.defeats}",
+      wld,
       decimal(champion.winRatio * 100) + '%',
       "#{decimal(champion.killsPerGame)}/#{decimal(champion.deathsPerGame)}/#{decimal(champion.assistsPerGame)}",
       decimal(champion.killsPerDeath),
