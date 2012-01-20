@@ -10,7 +10,11 @@ def loadChampionData(path)
   end
   champions = {}
   lines.each do |line|
-    pattern = /([A-Za-z\. ]+?) (\d+) (\d+) (\d+) (V|D)/
+    commentOffset = line.index(';')
+    if commentOffset != nil
+      line = line[0..commentOffset]
+    end
+    pattern = /^([A-Za-z\. ]+?) (\d+) (\d+) (\d+) (V|D)/
     match = line.match(pattern)
     if match == nil
       raise "Invalid line: #{line}"
