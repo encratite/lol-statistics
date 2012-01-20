@@ -86,7 +86,7 @@ def printStatistics(champions)
   table = [
     [
       'Champion',
-      'Games won',
+      'Wins/losses',
       'Win ratio',
       'K/D/A',
       'K/D',
@@ -96,7 +96,7 @@ def printStatistics(champions)
   champions.each do |champion|
     row = [
       champion.name,
-      "#{champion.victories}/#{champion.games}",
+      "#{champion.victories} - #{champion.games - champion.victories}",
       decimal(champion.winRatio * 100) + '%',
       "#{decimal(champion.killsPerGame)}/#{decimal(champion.deathsPerGame)}/#{decimal(champion.assistsPerGame)}",
       decimal(champion.killsPerDeath),
