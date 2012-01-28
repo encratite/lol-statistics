@@ -41,6 +41,14 @@ def decimal(input)
   return sprintf('%.1f', input)
 end
 
+def getWLDString(input)
+  if input > 0
+    return "+#{input}"
+  else
+    return input.to_s
+  end
+end
+
 def printStatistics(champions)
   table = [
     [
@@ -53,16 +61,14 @@ def printStatistics(champions)
       'K+A/D',
     ]
   ]
+  totalWLD = 0
   champions.each do |champion|
-    gain = champion.victories - champion.defeats
-    wld = gain.to_s
-    if gain > 0
-      wld = "+#{wld}"
-    end
+    wld = champion.victories - champion.defeats
+    totalWLD += wld
     row = [
       champion.name,
       "#{champion.victories} - #{champion.defeats}",
-      wld,
+      getWLDString(wld),
       decimal(champion.winRatio * 100) + '%',
       "#{decimal(champion.killsPerGame)}/#{decimal(champion.deathsPerGame)}/#{decimal(champion.assistsPerGame)}",
       decimal(champion.killsPerDeath),
@@ -71,4 +77,5 @@ def printStatistics(champions)
     table << row
   end
   Nil.printTable(table)
+  puts "\nTotal WLD: #{getWLDString(totalWLD)}"
 end
